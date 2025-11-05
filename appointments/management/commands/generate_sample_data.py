@@ -81,8 +81,13 @@ class Command(BaseCommand):
         appointments = []
         for i in range(appointment_count):
             # Random date within range
-            days_offset = random.randint(0, 90) - 30
-            appointment_date = start_date + timedelta(days=days_offset)
+            # 20% chance of today's appointments
+            if random.random() < 0.2:
+                # Today's appointment
+                appointment_date = timezone.now()
+            else:
+                days_offset = random.randint(0, 90) - 30
+                appointment_date = start_date + timedelta(days=days_offset)
             
             # Business hours: 7 AM - 6 PM
             hour = random.randint(7, 18)
